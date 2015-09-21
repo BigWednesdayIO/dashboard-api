@@ -2,6 +2,18 @@
   "name": "dashboard-api",
   "version": "1.0.0",
   "dependencies": {
+    "boom": {
+      "version": "2.8.0",
+      "from": "boom@*",
+      "resolved": "https://registry.npmjs.org/boom/-/boom-2.8.0.tgz",
+      "dependencies": {
+        "hoek": {
+          "version": "2.16.2",
+          "from": "hoek@>=2.0.0 <3.0.0",
+          "resolved": "https://registry.npmjs.org/hoek/-/hoek-2.16.2.tgz"
+        }
+      }
+    },
     "hapi": {
       "version": "10.0.0",
       "from": "hapi@>=10.0.0 <11.0.0",
@@ -182,6 +194,11 @@
           "resolved": "https://registry.npmjs.org/topo/-/topo-1.0.3.tgz"
         }
       }
+    },
+    "lodash": {
+      "version": "3.10.1",
+      "from": "lodash@*",
+      "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz"
     },
     "mocha": {
       "version": "2.3.3",
