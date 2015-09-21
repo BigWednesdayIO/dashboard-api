@@ -180,6 +180,30 @@
                     "required": true
                 }
             ]
+        },
+        "/authentication_providers": {
+            "get": {
+                "description": "Gets a list of supported authentication providers.",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "login_url": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
