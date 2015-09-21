@@ -145,6 +145,41 @@
                     "required": true
                 }
             ]
+        },
+        "/accounts/{id}/keys": {
+            "get": {
+                "description": "Gets `Keys` for an account.",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "integer"
+                                },
+                                "key": {
+                                    "type": "string"
+                                },
+                                "scope": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "Account identifier",
+                    "type": "integer",
+                    "required": true
+                }
+            ]
         }
     },
     "definitions": {
