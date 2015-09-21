@@ -108,6 +108,43 @@
                     }
                 ]
             }
+        },
+        "/accounts/{id}/permissions": {
+            "get": {
+                "description": "Gets `Permissions` for an account user",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                          "properties": {
+                              "scope": {
+                                  "title": "ArrayOfScopes",
+                                  "type": "array",
+                                  "items": {
+                                      "type": "string"
+                                  }
+                              }
+                          }
+                        }
+                    }
+                }
+            },
+            "parameters": [
+                {
+                  "name": "id",
+                  "in": "path",
+                  "description": "Account identifier",
+                  "type": "integer",
+                  "required": true
+                },
+                {
+                    "name": "user_id",
+                    "in": "query",
+                    "description": "User identifier",
+                    "type": "integer",
+                    "required": true
+                }
+            ]
         }
     },
     "definitions": {
