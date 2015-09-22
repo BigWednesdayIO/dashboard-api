@@ -60,18 +60,18 @@
                 }
             ]
         },
-        "/users/{id}/accounts": {
+        "/users/{id}/applications": {
             "get": {
-                "description": "Get the 'Accounts' that the user is associated with.\n",
+                "description": "Get the 'Applications' that the user is associated with.\n",
                 "responses": {
                     "200": {
                         "description": "Successful response",
                         "schema": {
-                            "title": "ArrayOfAccounts",
+                            "title": "ArrayOfApplications",
                             "type": "array",
                             "items": {
-                                "title": "Account",
-                                "$ref": "#/definitions/Account"
+                                "title": "Application",
+                                "$ref": "#/definitions/Application"
                             }
                         }
                     }
@@ -87,14 +87,14 @@
                 ]
             }
         },
-        "/accounts/{id}": {
+        "/applications/{id}": {
             "get": {
-                "description": "Gets an `Account`.\n",
+                "description": "Gets an `Application`.\n",
                 "responses": {
                     "200": {
                         "description": "Successful response",
                         "schema": {
-                            "$ref": "#/definitions/Account"
+                            "$ref": "#/definitions/Application"
                         }
                     }
                 },
@@ -102,16 +102,16 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "Account identifier",
+                        "description": "Application identifier",
                         "type": "integer",
                         "required": true
                     }
                 ]
             }
         },
-        "/accounts/{id}/permissions": {
+        "/applications/{id}/permissions": {
             "get": {
-                "description": "Gets `Permissions` for an account user",
+                "description": "Gets `Permissions` for an application user",
                 "responses": {
                     "200": {
                         "description": "Successful response",
@@ -133,7 +133,7 @@
                 {
                   "name": "id",
                   "in": "path",
-                  "description": "Account identifier",
+                  "description": "Application identifier",
                   "type": "integer",
                   "required": true
                 },
@@ -146,9 +146,9 @@
                 }
             ]
         },
-        "/accounts/{id}/keys": {
+        "/applications/{id}/keys": {
             "get": {
-                "description": "Gets `Keys` for an account.",
+                "description": "Gets `Keys` for an application.",
                 "responses": {
                     "200": {
                         "description": "Successful response",
@@ -175,7 +175,7 @@
                 {
                     "name": "id",
                     "in": "path",
-                    "description": "Account identifier",
+                    "description": "Application identifier",
                     "type": "integer",
                     "required": true
                 }
@@ -218,7 +218,7 @@
                 }
             }
         },
-        "Account": {
+        "Application": {
             "type": "object",
             "properties": {
                 "id": {
