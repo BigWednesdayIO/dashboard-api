@@ -87,6 +87,33 @@
                 ]
             }
         },
+        "/users/{id}/payment_methods": {
+            "get": {
+                "description": "Get the 'PaymentMethods' that the user is associated with.\n",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "title": "ArrayOfPaymentMethods",
+                            "type": "array",
+                            "items": {
+                                "title": "PaymentMethod",
+                                "$ref": "#/definitions/PaymentMethod"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User identifier",
+                        "type": "integer",
+                        "required": true
+                    }
+                ]
+            }
+        },
         "/applications/{id}": {
             "get": {
                 "description": "Gets an `Application`.\n",
@@ -214,6 +241,47 @@
                     "type": "integer"
                 },
                 "email": {
+                    "type": "string"
+                }
+            }
+        },
+        "PaymentMethod": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
+                },
+                "billing_name": {
+                    "type": "string"
+                },
+                "billing_address_line1": {
+                    "type": "string"
+                },
+                "billing_address_line2": {
+                    "type": "string"
+                },
+                "billing_address_city": {
+                    "type": "string"
+                },
+                "billing_address_region": {
+                    "type": "string"
+                },
+                "billing_address_country": {
+                    "type": "string"
+                },
+                "billing_card_type": {
+                    "type": "string"
+                },
+                "billing_card_last4": {
+                    "type": "string"
+                },
+                "billing_card_expiry_month": {
+                    "type": "string"
+                },
+                "billing_card_expiry_year": {
                     "type": "string"
                 }
             }
