@@ -87,6 +87,40 @@
                 ]
             }
         },
+        "/users/{id}/permissions": {
+            "get": {
+                "description": "Gets `Permissions` for an application user",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "title": "ArrayOfApplicationPermissions",
+                            "type": "array",
+                            "items": {
+                                "title": "ApplicationPermission",
+                                "$ref": "#/definitions/ApplicationPermission"
+                            }
+                        }
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "User identifier",
+                    "type": "integer",
+                    "required": true
+                },
+                {
+                    "name": "application_id",
+                    "in": "query",
+                    "description": "Application identifier",
+                    "type": "integer",
+                    "required": false
+                }
+            ]
+        },
         "/users/{id}/payment_methods": {
             "get": {
                 "description": "Get the 'PaymentMethods' that the user is associated with.\n",
@@ -138,20 +172,17 @@
         },
         "/applications/{id}/permissions": {
             "get": {
-                "description": "Gets `Permissions` for an application user",
+                "description": "Gets `Permissions` for an application",
                 "responses": {
                     "200": {
                         "description": "Successful response",
                         "schema": {
-                          "properties": {
-                              "scope": {
-                                  "title": "ArrayOfScopes",
-                                  "type": "array",
-                                  "items": {
-                                      "type": "string"
-                                  }
-                              }
-                          }
+                            "title": "ArrayOfApplicationPermissions",
+                            "type": "array",
+                            "items": {
+                                "title": "ApplicationPermission",
+                                "$ref": "#/definitions/ApplicationPermission"
+                            }
                         }
                     }
                 }
@@ -163,13 +194,6 @@
                   "description": "Application identifier",
                   "type": "integer",
                   "required": true
-                },
-                {
-                    "name": "user_id",
-                    "in": "query",
-                    "description": "User identifier",
-                    "type": "integer",
-                    "required": true
                 }
             ]
         },
@@ -294,36 +318,23 @@
                 },
                 "plan_id": {
                     "type": "integer"
+                }
+            }
+        },
+        "ApplicationPermission": {
+            "type": "object",
+            "properties": {
+                "user_id": {
+                    "type": "integer"
                 },
-                "billing_name": {
-                    "type": "string"
+                "application_id": {
+                    "type": "integer"
                 },
-                "billing_address_line1": {
-                    "type": "string"
-                },
-                "billing_address_line2": {
-                    "type": "string"
-                },
-                "billing_address_city": {
-                    "type": "string"
-                },
-                "billing_address_region": {
-                    "type": "string"
-                },
-                "billing_address_country": {
-                    "type": "string"
-                },
-                "billing_card_type": {
-                    "type": "string"
-                },
-                "billing_card_last4": {
-                    "type": "string"
-                },
-                "billing_card_expiry_month": {
-                    "type": "string"
-                },
-                "billing_card_expiry_year": {
-                    "type": "string"
+                "scopes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             }
         }
