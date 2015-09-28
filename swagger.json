@@ -38,6 +38,30 @@
                 }
             }
         },
+        "/users": {
+            "post": {
+                "description": "Creates a `User`.",
+                "responses": {
+                    "201": {
+                        "description": "Successful response",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "user",
+                        "required": true,
+                        "in": "body",
+                        "description": "A `User` object",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ]
+            }
+        },
         "/users/{id}": {
             "get": {
                 "description": "Gets a `User`.\n",
@@ -58,7 +82,29 @@
                     "type": "integer",
                     "required": true
                 }
-            ]
+            ],
+            "put": {
+                "description": "Updates a `User`.\n",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "user",
+                        "required": true,
+                        "in": "body",
+                        "description": "A `User` object",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                ]
+            }
         },
         "/users/{id}/applications": {
             "get": {
@@ -260,6 +306,7 @@
     "definitions": {
         "User": {
             "type": "object",
+            "required": ["email"],
             "properties": {
                 "id": {
                     "type": "integer"
