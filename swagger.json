@@ -169,7 +169,7 @@
         },
         "/users/{id}/payment_methods": {
             "get": {
-                "description": "Get the 'PaymentMethods' that the user is associated with.\n",
+                "description": "Get `PaymentMethod`'s for a user.",
                 "responses": {
                     "200": {
                         "description": "Successful response",
@@ -182,21 +182,142 @@
                             }
                         }
                     }
+                }
+            },
+            "post": {
+                "description": "Creates a `PaymentMethod` for a user.",
+                "responses": {
+                    "201": {
+                        "description": "Successful response",
+                        "schema": {
+                            "title": "PaymentMethod",
+                            "$ref": "#/definitions/PaymentMethod"
+                        }
+                    }
                 },
                 "parameters": [
                     {
-                        "name": "id",
-                        "in": "path",
-                        "description": "User identifier",
-                        "type": "integer",
-                        "required": true
+                        "name": "payment_method",
+                        "in": "body",
+                        "description": "A `PaymentMethod` object",
+                        "required": true,
+                        "schema": {
+                            "title": "PaymentMethod",
+                            "$ref": "#/definitions/PaymentMethod"
+                        }
+                    }
+                ]
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "User identifier",
+                    "type": "integer",
+                    "required": true
+                }
+            ]
+        },
+        "/users/{id}/payment_methods/{payment_method_id}": {
+            "get": {
+                "description": "Get a `PaymentMethod` for a user.",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "title": "PaymentMethod",
+                            "$ref": "#/definitions/PaymentMethod"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a `PaymentMethod`'s for the user.",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "title": "PaymentMethod",
+                            "$ref": "#/definitions/PaymentMethod"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "payment_method",
+                        "in": "body",
+                        "description": "A `PaymentMethod` object",
+                        "required": true,
+                        "schema": {
+                            "title": "PaymentMethod",
+                            "$ref": "#/definitions/PaymentMethod"
+                        }
+                    }
+                ]
+            },
+            "delete": {
+                "description": "Delete a `PaymentMethod` for a user.",
+                "responses": {
+                    "204": {
+                        "description": "Payment method deleted"
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "User identifier",
+                    "type": "integer",
+                    "required": true
+                },
+                {
+                    "name": "payment_method_id",
+                    "in": "path",
+                    "description": "Payment method identifier",
+                    "type": "integer",
+                    "required": true
+                }
+            ]
+        },
+        "/applications": {
+            "post": {
+                "description": "Creates an `Application`.",
+                "responses": {
+                    "201": {
+                        "description": "Successful response",
+                        "schema": {
+                            "$ref": "#/definitions/Application"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "application",
+                        "in": "body",
+                        "description": "An `Application` object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Application"
+                        }
                     }
                 ]
             }
         },
         "/applications/{id}": {
             "get": {
-                "description": "Gets an `Application`.\n",
+                "description": "Gets an `Application`.",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "$ref": "#/definitions/Application"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Updates an `Application`.",
                 "responses": {
                     "200": {
                         "description": "Successful response",
@@ -207,14 +328,33 @@
                 },
                 "parameters": [
                     {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Application identifier",
-                        "type": "integer",
-                        "required": true
+                        "name": "application",
+                        "in": "body",
+                        "description": "An `Application` object",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Application"
+                        }
                     }
                 ]
-            }
+            },
+            "delete": {
+                "description": "Deletes an `Application`.",
+                "responses": {
+                    "204": {
+                        "description": "Application deleted"
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "description": "Application identifier",
+                    "type": "integer",
+                    "required": true
+                }
+            ]
         },
         "/applications/{id}/permissions": {
             "get": {
