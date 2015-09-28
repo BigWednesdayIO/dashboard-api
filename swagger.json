@@ -84,7 +84,7 @@
                 }
             ],
             "put": {
-                "description": "Updates a `User`.\n",
+                "description": "Updates a `User`.",
                 "responses": {
                     "200": {
                         "description": "Successful response",
@@ -108,7 +108,7 @@
         },
         "/users/{id}/applications": {
             "get": {
-                "description": "Get the 'Applications' that the user is associated with.\n",
+                "description": "Get the `Applications` that the user is associated with.\n",
                 "responses": {
                     "200": {
                         "description": "Successful response",
@@ -169,7 +169,7 @@
         },
         "/users/{id}/payment_methods": {
             "get": {
-                "description": "Get `PaymentMethod`'s for a user.",
+                "description": "Get `PaymentMethods` for a user.",
                 "responses": {
                     "200": {
                         "description": "Successful response",
@@ -185,7 +185,7 @@
                 }
             },
             "post": {
-                "description": "Creates a `PaymentMethod` for a user.",
+                "description": "Create a `PaymentMethod` for a user.",
                 "responses": {
                     "201": {
                         "description": "Successful response",
@@ -232,7 +232,7 @@
                 }
             },
             "put": {
-                "description": "Update a `PaymentMethod`'s for the user.",
+                "description": "Update a `PaymentMethod` for a user.",
                 "responses": {
                     "200": {
                         "description": "Successful response",
@@ -458,6 +458,7 @@
         },
         "PaymentMethod": {
             "type": "object",
+            "required": ["user_id"],
             "properties": {
                 "id": {
                     "type": "integer"
@@ -499,6 +500,7 @@
         },
         "Application": {
             "type": "object",
+            "required": ["plan_id"],
             "properties": {
                 "id": {
                     "type": "integer"
@@ -510,6 +512,7 @@
         },
         "ApplicationPermission": {
             "type": "object",
+            "required": ["user_id", "application_id", "scopes"],
             "properties": {
                 "user_id": {
                     "type": "integer"
