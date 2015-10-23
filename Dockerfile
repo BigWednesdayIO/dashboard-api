@@ -2,9 +2,6 @@ FROM node:4.2.1
 
 ADD . /src
 
-RUN npm install -g grunt-cli && \
-  npm install -g swagger-tools
-
 RUN cd /src; npm install
 
 EXPOSE 8080
