@@ -26,13 +26,13 @@ module.exports = function (options) {
             const swaggerPath = swagger.paths[route];
 
             if (!swaggerPath) {
-              return reject(new Error(`Route ${route} is undocumented. Please add to swagger.json.`));
+              return reject(new Error(`Route ${route} is undocumented.`));
             }
 
             const swaggerMethod = swaggerPath[method];
 
             if (!swaggerMethod) {
-              return reject(new Error(`${method} for route ${route} is undocumented. Please add to swagger.json.`));
+              return reject(new Error(`${method} for route ${route} is undocumented.`));
             }
 
             resolve(response);
