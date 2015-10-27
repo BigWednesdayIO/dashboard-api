@@ -26,6 +26,11 @@ module.exports = function (grunt) {
         src: ['<%= specs %>']
       }
     },
+    env: {
+      test: {
+        RESPONSE_FAIL_ACTION: 'error'
+      }
+    },
     watch: {
       app: {
         files: ['<%= app %>', '<%= tests %>'],
@@ -42,8 +47,8 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('lint', 'eslint');
-  grunt.registerTask('test', 'mochaTest:test');
-  grunt.registerTask('spec', 'mochaTest:spec');
+  grunt.registerTask('test', ['env:test', 'mochaTest:test']);
+  grunt.registerTask('spec', ['env:test', 'mochaTest:spec']);
   grunt.registerTask('ci', ['retire', 'default']);
   grunt.registerTask('default', ['lint', 'test', 'spec']);
 };
