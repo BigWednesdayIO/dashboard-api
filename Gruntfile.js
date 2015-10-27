@@ -26,9 +26,9 @@ module.exports = function (grunt) {
         src: ['<%= specs %>']
       }
     },
-    shell: {
-      validateSwagger: {
-        command: 'swagger-tools validate swagger.json'
+    env: {
+      test: {
+        RESPONSE_FAIL_ACTION: 'error'
       }
     },
     watch: {
@@ -39,10 +39,6 @@ module.exports = function (grunt) {
       specs: {
         files: ['<%= specs %>'],
         tasks: ['lint', 'spec']
-      },
-      swagger: {
-        files: ['swagger.json'],
-        tasks: ['shell:validateSwagger', 'spec']
       }
     },
     retire: {
@@ -51,8 +47,8 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('lint', 'eslint');
-  grunt.registerTask('test', 'mochaTest:test');
-  grunt.registerTask('spec', 'mochaTest:spec');
+  grunt.registerTask('test', ['env:test', 'mochaTest:test']);
+  grunt.registerTask('spec', ['env:test', 'mochaTest:spec']);
   grunt.registerTask('ci', ['retire', 'default']);
-  grunt.registerTask('default', ['lint', 'test', 'shell:validateSwagger', 'spec']);
+  grunt.registerTask('default', ['lint', 'test', 'spec']);
 };
