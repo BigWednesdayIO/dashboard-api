@@ -2,6 +2,7 @@
 
 const expect = require('chai').expect;
 const specRequest = require('./spec_request');
+const token = require('./test_token').valid;
 
 describe('/users', () => {
   describe('post', () => {
@@ -11,7 +12,7 @@ describe('/users', () => {
       beforeEach(() => {
         createUserResponse = undefined;
         return specRequest({
-          url: '/users',
+          url: `/users?token=${token}`,
           method: 'POST',
           payload: {
             email: 'test@bigwednesday.io',
@@ -46,7 +47,7 @@ describe('/users', () => {
     describe('validation', () => {
       it('requires email address', () => {
         return specRequest({
-          url: '/users',
+          url: `/users?token=${token}`,
           method: 'POST',
           payload: {}
         })
@@ -58,7 +59,7 @@ describe('/users', () => {
 
       it('validates email address format', () => {
         return specRequest({
-          url: '/users',
+          url: `/users?token=${token}`,
           method: 'POST',
           payload: {email: 'bigwednesday.io'}
         })
@@ -70,7 +71,7 @@ describe('/users', () => {
 
       it('validates company is string', () => {
         return specRequest({
-          url: '/users',
+          url: `/users?token=${token}`,
           method: 'POST',
           payload: {email: 'test@bigwednesday.io', company: 1}
         })
@@ -82,7 +83,7 @@ describe('/users', () => {
 
       it('rejects id field', () => {
         return specRequest({
-          url: '/users',
+          url: `/users?token=${token}`,
           method: 'POST',
           payload: {id: 1, email: 'test@bigwednesday.io'}
         })

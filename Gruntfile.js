@@ -28,7 +28,9 @@ module.exports = function (grunt) {
     },
     env: {
       test: {
-        RESPONSE_FAIL_ACTION: 'error'
+        RESPONSE_FAIL_ACTION: 'error',
+        CLIENT_SECRET: '78c74c028b276e5db1e37ef4d06ba747',
+        AUDIENCE: 'nZcyZaiMFMqsnpy6b1Gt'
       }
     },
     watch: {
