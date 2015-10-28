@@ -2,6 +2,7 @@
 
 const expect = require('chai').expect;
 const specRequest = require('./spec_request');
+const token = require('./test_token').valid;
 
 describe('/users_{id}', () => {
   let createdId;
@@ -9,7 +10,7 @@ describe('/users_{id}', () => {
 
   beforeEach(() => {
     return specRequest({
-      url: '/users',
+      url: `/users?token=${token}`,
       method: 'POST',
       payload: userForCreate
     })
@@ -21,7 +22,7 @@ describe('/users_{id}', () => {
   describe('get', () => {
     it('gets a user', () => {
       return specRequest({
-        url: `/users/${createdId}`,
+        url: `/users/${createdId}?token=${token}`,
         method: 'GET'
       })
       .then(response => {
@@ -32,7 +33,7 @@ describe('/users_{id}', () => {
 
     it('returns a 404 for invalid user id', () => {
       return specRequest({
-        url: '/users/unknown_id',
+        url: `/users/unknown_id?token=${token}`,
         method: 'GET'
       })
       .then(response => {
