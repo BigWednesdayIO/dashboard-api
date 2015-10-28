@@ -1,8 +1,8 @@
 'use strict';
 
 const expect = require('chai').expect;
-const specRequest = require('./spec_request');
-const token = require('./test_token').valid;
+const specRequest = require('../spec_request');
+const token = require('../test_token').valid;
 
 describe('/users', () => {
   describe('post', () => {
