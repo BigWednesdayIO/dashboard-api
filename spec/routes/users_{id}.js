@@ -6,29 +6,32 @@ const jwtUtil = require('../jwt_util');
 const token = jwtUtil.sign();
 
 describe('/users_{id}', () => {
-  let createdId;
-  const userForCreate = {email: 'test@bigwednesday.io'};
+  let credentials;
 
-  beforeEach(() => {
+  before(() => {
+    const auth0Token = jwtUtil.sign({
+      email: 'test@bigwednesday.io',
+      email_verified: true
+    });
+
     return specRequest({
-      url: `/users?token=${token}`,
-      method: 'POST',
-      payload: userForCreate
+      url: `/authenticate?token=${auth0Token}`,
+      method: 'POST'
     })
     .then(response => {
-      createdId = response.result.id;
+      credentials = response.result;
     });
   });
 
   describe('get', () => {
     it('gets a user', () => {
       return specRequest({
-        url: `/users/${createdId}?token=${token}`,
+        url: `/users/${credentials.id}?token=${credentials.token}`,
         method: 'GET'
       })
       .then(response => {
         expect(response.statusCode).to.equal(200);
-        expect(response.result).to.eql(Object.assign({id: createdId}, userForCreate));
+        expect(response.result).to.eql({id: credentials.id, email: 'test@bigwednesday.io'});
       });
     });
 
