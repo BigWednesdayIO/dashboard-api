@@ -2,14 +2,14 @@
 
 const expect = require('chai').expect;
 const specRequest = require('../spec_request');
-const tokenBuilder = require('../test_token').builder;
+const jwtUtil = require('../jwt_util');
 const userDb = require('../../lib/userDb');
 
 describe('/authenticate', () => {
   describe('post', () => {
     describe('jwt validation', () => {
       it('requires an email address', () => {
-        const token = tokenBuilder({email_verified: true});
+        const token = jwtUtil.sign({email_verified: true});
         return specRequest({
           url: `/authenticate?token=${token}`,
           method: 'POST'
@@ -21,7 +21,7 @@ describe('/authenticate', () => {
       });
 
       it('requires email_verified', () => {
-        const token = tokenBuilder({email: 'unverified_user@bigwednesday.io'});
+        const token = jwtUtil.sign({email: 'unverified_user@bigwednesday.io'});
         return specRequest({
           url: `/authenticate?token=${token}`,
           method: 'POST'
@@ -33,7 +33,7 @@ describe('/authenticate', () => {
       });
 
       it('requires email_verified to be true', () => {
-        const token = tokenBuilder({email: 'unverified_user@bigwednesday.io', email_verified: 'yes'});
+        const token = jwtUtil.sign({email: 'unverified_user@bigwednesday.io', email_verified: 'yes'});
         return specRequest({
           url: `/authenticate?token=${token}`,
           method: 'POST'
@@ -46,7 +46,7 @@ describe('/authenticate', () => {
     });
 
     describe('new user', () => {
-      const token = tokenBuilder({email: 'new_user@bigwednesday.io', email_verified: true});
+      const token = jwtUtil.sign({email: 'new_user@bigwednesday.io', email_verified: true});
       let newUserResponse;
 
       before(() => {
@@ -71,6 +71,11 @@ describe('/authenticate', () => {
         expect(newUserResponse.result.id).to.be.ok;
       });
 
+      it('token has user scope', () => {
+        const responseToken = jwtUtil.verify(newUserResponse.result.token);
+        expect(responseToken.scopes).to.eql([`user:${newUserResponse.result.id}`]);
+      });
+
       it('persists user', () => {
         const createdUser = userDb.findByEmail('new_user@bigwednesday.io');
         expect(createdUser.id).to.equal(newUserResponse.result.id);
@@ -78,7 +83,7 @@ describe('/authenticate', () => {
     });
 
     describe('existing user', () => {
-      const token = tokenBuilder({email: 'existing_user@bigwednesday.io', email_verified: true});
+      const token = jwtUtil.sign({email: 'existing_user@bigwednesday.io', email_verified: true});
 
       let existingUser;
 
@@ -100,6 +105,11 @@ describe('/authenticate', () => {
 
       it('returns user id', () => {
         expect(existingUser.result.id).to.be.ok;
+      });
+
+      it('token has user scope', () => {
+        const responseToken = jwtUtil.verify(existingUser.result.token);
+        expect(responseToken.scopes).to.eql([`user:${existingUser.result.id}`]);
       });
     });
   });

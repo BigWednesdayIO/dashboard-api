@@ -2,7 +2,7 @@
 
 const specRequest = require('./spec_request');
 const expect = require('chai').expect;
-const tokenBuilder = require('./test_token').builder;
+const jwtUtil = require('./jwt_util');
 
 describe('authentication', () => {
   require('../lib/server')((err, server) => {
@@ -24,7 +24,7 @@ describe('authentication', () => {
       });
 
       it(`requires un-expired token to ${route.method} to ${route.path} `, () => {
-        const token = tokenBuilder({}, {expiresIn: '0'});
+        const token = jwtUtil.sign({}, {expiresIn: '0'});
 
         return specRequest({
           url: `${route.path}?token=${token}`,
@@ -37,7 +37,7 @@ describe('authentication', () => {
       });
 
       it(`requires correct issuer to ${route.method} to ${route.path} `, () => {
-        const token = tokenBuilder({}, {issuer: 'http://unknown_issuer/'});
+        const token = jwtUtil.sign({}, {issuer: 'http://unknown_issuer/'});
 
         return specRequest({
           url: `${route.path}?token=${token}`,
@@ -50,7 +50,7 @@ describe('authentication', () => {
       });
 
       it(`requires correct audience to ${route.method} to ${route.path} `, () => {
-        const token = tokenBuilder({}, {audience: 'some_audience'});
+        const token = jwtUtil.sign({}, {audience: 'some_audience'});
 
         return specRequest({
           url: `${route.path}?token=${token}`,
@@ -63,7 +63,7 @@ describe('authentication', () => {
       });
 
       it(`requires correct algorithm to ${route.method} to ${route.path} `, () => {
-        const token = tokenBuilder({}, {algorithm: 'HS512'});
+        const token = jwtUtil.sign({}, {algorithm: 'HS512'});
 
         return specRequest({
           url: `${route.path}?token=${token}`,

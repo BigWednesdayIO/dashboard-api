@@ -2,7 +2,8 @@
 
 const expect = require('chai').expect;
 const specRequest = require('../spec_request');
-const token = require('../test_token').valid;
+const jwtUtil = require('../jwt_util');
+const token = jwtUtil.sign();
 
 describe('/users', () => {
   describe('post', () => {
