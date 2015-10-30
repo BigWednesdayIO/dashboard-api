@@ -24,7 +24,7 @@ describe('/users_{id}', () => {
   });
 
   describe('get', () => {
-    it('gets a user', () => {
+    it('gets a user by id', () => {
       return specRequest({
         url: `/users/${credentials.id}?token=${credentials.token}`,
         method: 'GET'
@@ -35,14 +35,14 @@ describe('/users_{id}', () => {
       });
     });
 
-    it('returns a 404 for invalid user id', () => {
+    it('returns a 403 when requesting a user other than self', () => {
       return specRequest({
-        url: `/users/unknown_id?token=${token}`,
+        url: `/users/another_user_id?token=${token}`,
         method: 'GET'
       })
       .then(response => {
-        expect(response.statusCode).to.equal(404);
-        expect(response.result.message).to.equal('User unknown_id does not exist');
+        expect(response.statusCode).to.equal(403);
+        expect(response.result.message).to.equal('Insufficient scope, expected any of: user:another_user_id');
       });
     });
   });

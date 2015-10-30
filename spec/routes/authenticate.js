@@ -73,7 +73,7 @@ describe('/authenticate', () => {
 
       it('token has user scope', () => {
         const responseToken = jwtUtil.verify(newUserResponse.result.token);
-        expect(responseToken.scopes).to.eql([`user:${newUserResponse.result.id}`]);
+        expect(responseToken.scope).to.eql([`user:${newUserResponse.result.id}`]);
       });
 
       it('persists user', () => {
@@ -109,7 +109,7 @@ describe('/authenticate', () => {
 
       it('token has user scope', () => {
         const responseToken = jwtUtil.verify(existingUser.result.token);
-        expect(responseToken.scopes).to.eql([`user:${existingUser.result.id}`]);
+        expect(responseToken.scope).to.eql([`user:${existingUser.result.id}`]);
       });
     });
   });
