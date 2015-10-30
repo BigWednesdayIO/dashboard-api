@@ -7,44 +7,6 @@ const userDb = require('../../lib/userDb');
 
 describe('/authenticate', () => {
   describe('post', () => {
-    describe('jwt validation', () => {
-      it('requires an email address', () => {
-        const token = jwtUtil.sign({email_verified: true});
-        return specRequest({
-          url: `/authenticate?token=${token}`,
-          method: 'POST'
-        })
-        .then(response => {
-          expect(response.statusCode).to.equal(401);
-          expect(response.result.message).to.equal('No email address');
-        });
-      });
-
-      it('requires email_verified', () => {
-        const token = jwtUtil.sign({email: 'unverified_user@bigwednesday.io'});
-        return specRequest({
-          url: `/authenticate?token=${token}`,
-          method: 'POST'
-        })
-        .then(response => {
-          expect(response.statusCode).to.equal(401);
-          expect(response.result.message).to.equal('Email address not verified');
-        });
-      });
-
-      it('requires email_verified to be true', () => {
-        const token = jwtUtil.sign({email: 'unverified_user@bigwednesday.io', email_verified: 'yes'});
-        return specRequest({
-          url: `/authenticate?token=${token}`,
-          method: 'POST'
-        })
-        .then(response => {
-          expect(response.statusCode).to.equal(401);
-          expect(response.result.message).to.equal('Email address not verified');
-        });
-      });
-    });
-
     describe('new user', () => {
       const token = jwtUtil.sign({email: 'new_user@bigwednesday.io', email_verified: true});
       let newUserResponse;
@@ -110,6 +72,59 @@ describe('/authenticate', () => {
       it('token has user scope', () => {
         const responseToken = jwtUtil.verify(existingUser.result.token);
         expect(responseToken.scope).to.eql([`user:${existingUser.result.id}`]);
+      });
+    });
+
+    describe('validation', () => {
+      it('requires an email address in jwt', () => {
+        const token = jwtUtil.sign({email_verified: true});
+        return specRequest({
+          url: `/authenticate?token=${token}`,
+          method: 'POST'
+        })
+        .then(response => {
+          expect(response.statusCode).to.equal(401);
+          expect(response.result.message).to.equal('No email address');
+        });
+      });
+
+      it('requires email_verified in jwt', () => {
+        const token = jwtUtil.sign({email: 'unverified_user@bigwednesday.io'});
+        return specRequest({
+          url: `/authenticate?token=${token}`,
+          method: 'POST'
+        })
+        .then(response => {
+          expect(response.statusCode).to.equal(401);
+          expect(response.result.message).to.equal('Email address not verified');
+        });
+      });
+
+      it('requires email_verified in jwt to be true', () => {
+        const token = jwtUtil.sign({email: 'unverified_user@bigwednesday.io', email_verified: 'yes'});
+        return specRequest({
+          url: `/authenticate?token=${token}`,
+          method: 'POST'
+        })
+        .then(response => {
+          expect(response.statusCode).to.equal(401);
+          expect(response.result.message).to.equal('Email address not verified');
+        });
+      });
+
+      it('reject payload', () => {
+        const token = jwtUtil.sign({email: 'test@bigwednesday.io', email_verified: true});
+        return specRequest({
+          url: `/authenticate?token=${token}`,
+          method: 'POST',
+          payload: {
+            something: true
+          }
+        })
+        .then(response => {
+          expect(response.statusCode).to.equal(400);
+          expect(response.result.message).to.equal('"something" is not allowed');
+        });
       });
     });
   });
